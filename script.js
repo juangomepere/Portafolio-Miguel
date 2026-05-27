@@ -14,38 +14,83 @@ const revealObs = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
 
-/* ── 3D Renders Carousel ───────────────────────────────────────────────── */
+/* ── Illustrations Fan ─────────────────────────────────────────────────── */
+const illusFan = document.querySelector('.illus-fan');
+if (illusFan) {
+  const fanObs = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        illusFan.classList.add('spread');
+        fanObs.disconnect();
+      }
+    },
+    { threshold: 0.25 }
+  );
+  fanObs.observe(illusFan);
+}
+
+/* ── 3D Renders Carousel — hold to scroll ──────────────────────────────── */
 const rendersTrack = document.getElementById('renders-track');
 const prevBtn      = document.getElementById('prev-btn');
 const nextBtn      = document.getElementById('next-btn');
 
 if (rendersTrack) {
-  const slides = rendersTrack.querySelectorAll('.carousel-slide');
-  let cur = 0;
-  let autoTimer;
+  const screen = rendersTrack.parentElement;
+  let scrollX = 0;
+  let rafId   = null;
+  const SPEED = 5;
 
-  function goTo(n) {
-    cur = ((n % slides.length) + slides.length) % slides.length;
-    rendersTrack.style.transform = `translateX(-${cur * 100}%)`;
+  function getMax() {
+    return rendersTrack.scrollWidth - screen.offsetWidth;
   }
 
-  function resetAuto() {
-    clearInterval(autoTimer);
-    autoTimer = setInterval(() => goTo(cur + 1), 4500);
+  function scroll(dir) {
+    scrollX = Math.max(0, Math.min(scrollX + dir * SPEED, getMax()));
+    rendersTrack.style.transform = `translateX(-${scrollX}px)`;
+    rafId = requestAnimationFrame(() => scroll(dir));
   }
 
-  prevBtn?.addEventListener('click', () => { goTo(cur - 1); resetAuto(); });
-  nextBtn?.addEventListener('click', () => { goTo(cur + 1); resetAuto(); });
+  function stop() {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+  }
 
-  /* touch/swipe */
-  let touchStartX = 0;
-  rendersTrack.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
-  rendersTrack.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) { goTo(dx < 0 ? cur + 1 : cur - 1); resetAuto(); }
+  [[prevBtn, -1], [nextBtn, 1]].forEach(([btn, dir]) => {
+    if (!btn) return;
+    btn.addEventListener('mousedown',  () => scroll(dir));
+    btn.addEventListener('touchstart', () => scroll(dir), { passive: true });
+    btn.addEventListener('mouseup',    stop);
+    btn.addEventListener('mouseleave', stop);
+    btn.addEventListener('touchend',   stop);
   });
 
-  resetAuto();
+  document.addEventListener('mouseup', stop);
+}
+
+/* ── Lego Deadpool Carousel (slide + fade) ──────────────────────────────── */
+const legoTrack = document.getElementById('lego-track');
+if (legoTrack) {
+  const legoSlides = legoTrack.querySelectorAll('.lego-slide');
+  let legoCur = 0;
+
+  setInterval(() => {
+    const prev = legoCur;
+    legoCur = (legoCur + 1) % legoSlides.length;
+    legoSlides[prev].classList.add('exiting');
+    legoSlides[prev].classList.remove('active');
+    legoSlides[legoCur].classList.add('active');
+    setTimeout(() => legoSlides[prev].classList.remove('exiting'), 700);
+  }, 3000);
+}
+
+/* ── Proyectos 3D — Fade (Principito / Tren) ──────────────────────────── */
+const projSlides = document.querySelectorAll('.project-slide');
+if (projSlides.length) {
+  let projCur = 0;
+  setInterval(() => {
+    projSlides[projCur].classList.remove('active');
+    projCur = (projCur + 1) % projSlides.length;
+    projSlides[projCur].classList.add('active');
+  }, 5000);
 }
 
 /* ── Packaging Carousel ────────────────────────────────────────────────── */
