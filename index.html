@@ -109,7 +109,7 @@
   </section>
 
   <!-- MARQUEE 2 (reverse) -->
-  <div class="marquee marquee--rev">
+  <div class="marquee">
     <div class="marquee-track">
       <span>PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
       <span aria-hidden="true">PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
@@ -154,18 +154,23 @@
 
     <!-- Carrusel full-width — hijo directo de section -->
     <div class="lego-scene reveal">
-      <div class="lego-wave-clip lego-wave-clip--top">
-        <img src="assets/FORMA 2.png" alt="" aria-hidden="true">
+      <!-- Backdrop: olas + relleno cream -->
+      <div class="lego-backdrop">
+        <div class="lego-wave-clip lego-wave-clip--top">
+          <img src="assets/FORMA 2.png" alt="" aria-hidden="true">
+        </div>
+        <div class="lego-fill"></div>
+        <div class="lego-wave-clip lego-wave-clip--bottom">
+          <img src="assets/FORMA 1.png" alt="" aria-hidden="true">
+        </div>
       </div>
+      <!-- Deadpool encima -->
       <div class="lego-carousel">
         <div class="lego-track" id="lego-track">
           <div class="lego-slide active"><img src="assets/LEGO 1.png" alt="Deadpool LEGO — render 1"></div>
           <div class="lego-slide"><img src="assets/LEGO 2.png" alt="Deadpool LEGO — render 2"></div>
           <div class="lego-slide"><img src="assets/LEGO 3.png" alt="Deadpool LEGO — render 3"></div>
         </div>
-      </div>
-      <div class="lego-wave-clip lego-wave-clip--bottom">
-        <img src="assets/FORMA 1.png" alt="" aria-hidden="true">
       </div>
     </div>
 
@@ -259,11 +264,8 @@
     </button>
   </section>
 
-  <!-- WAVE → cream -->
-  <div class="wave wave--to-cream"><img src="assets/FORMA 2.png" alt="" aria-hidden="true"></div>
-
-  <!-- MARQUEE 4 (reverse) -->
-  <div class="marquee marquee--rev">
+  <!-- MARQUEE 4 -->
+  <div class="marquee">
     <div class="marquee-track">
       <span>PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
       <span aria-hidden="true">PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
@@ -292,12 +294,12 @@
       <!-- Fila 2: texto izquierda + imagen derecha -->
       <div class="ed-row reveal">
         <p class="ed-desc">El proyecto fue diseñado pensando tanto en lectores colombianos como en personas de otros países, creando una experiencia visual que permite conocer parte de la riqueza cultural y humana de Colombia desde una mirada moderna y editorial.</p>
-        <img src="assets/REVISTA 3.png" class="ed-spread" alt="Revista Tricolor — interior 2">
+        <img src="assets/REVISTA 4.png" class="ed-spread" alt="Revista Tricolor — interior 2">
       </div>
 
       <!-- Fila 3: imagen izquierda + texto derecha -->
       <div class="ed-row reveal">
-        <img src="assets/REVISTA 4.png" class="ed-spread" alt="Revista Tricolor — interior 3">
+        <img src="assets/REVISTA 3.png" class="ed-spread" alt="Revista Tricolor — interior 3">
         <p class="ed-desc">A nivel gráfico, la revista combina una estética vibrante y contemporánea con una diagramación limpia y elegante. Cada página fue construida para transmitir energía, color y autenticidad, convirtiendo la propuesta en una pieza editorial visualmente impactante.</p>
       </div>
     </div>
@@ -315,25 +317,25 @@
   <section class="packaging" id="packaging">
     <div class="container">
       <h2 class="packaging-title reveal">PACKAGING</h2>
-      <p class="packaging-desc reveal">Desarrollo de propuestas de packaging enfocadas en identidad visual, experiencia de marca y presentación de producto. Los proyectos corresponden a una línea conceptual creada para Juan Valdez, donde se diseñaron tres empaques distintos explorando soluciones gráficas y estructurales con un enfoque premium y contemporáneo.</p>
+    </div>
 
-      <div class="pkg-carousel reveal">
-        <div class="pkg-track" id="pkg-track">
-          <div class="pkg-slide"><img src="assets/JUAN VLDZ 1.png" alt="Juan Valdez packaging 1"></div>
-          <div class="pkg-slide"><img src="assets/JUAN VLDZ 2.png" alt="Juan Valdez packaging 2"></div>
-          <div class="pkg-slide"><img src="assets/JUAN VLDZ 3.png" alt="Juan Valdez packaging 3"></div>
-        </div>
-      </div>
-      <div class="pkg-dots" id="pkg-dots">
-        <button class="pkg-dot active" data-index="0" aria-label="Packaging 1"></button>
-        <button class="pkg-dot"        data-index="1" aria-label="Packaging 2"></button>
-        <button class="pkg-dot"        data-index="2" aria-label="Packaging 3"></button>
+    <div class="pkg-stage" id="pkg-stage">
+      <div class="pkg-card pkg-card--1"><img src="assets/JUAN VLDZ 1.png" alt="Juan Valdez packaging 1"></div>
+      <div class="pkg-card pkg-card--2"><img src="assets/JUAN VLDZ 2.png" alt="Juan Valdez packaging 2"></div>
+      <div class="pkg-card pkg-card--3"><img src="assets/JUAN VLDZ 3.png" alt="Juan Valdez packaging 3"></div>
+    </div>
+
+    <div class="container">
+      <div class="pkg-info reveal">
+        <img src="assets/CLICK.svg" class="pkg-click-icon" alt="" aria-hidden="true">
+        <p class="pkg-text">Desarrollo de propuestas de packaging enfocadas en identidad visual, experiencia de marca y presentación de producto. Los proyectos presentados corresponden a una línea conceptual creada para Juan Valdez, donde se diseñaron tres empaques distintos a partir de los requerimientos del cliente, explorando soluciones gráficas y estructurales con un enfoque premium y contemporáneo.</p>
+        <p class="pkg-text">Cada propuesta integra branding, dirección de arte y diseño funcional, buscando generar una experiencia visual sólida que conecte con el consumidor y fortalezca la percepción de marca.</p>
       </div>
     </div>
   </section>
 
   <!-- MARQUEE 6 (reverse) -->
-  <div class="marquee marquee--rev">
+  <div class="marquee">
     <div class="marquee-track">
       <span>PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
       <span aria-hidden="true">PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span>
@@ -346,39 +348,85 @@
     <!-- Header -->
     <div class="branding-header reveal">
       <h2 class="branding-title">BRANDING</h2>
-      <img src="assets/FOTO MIGUEL .png" alt="Miguel Rodriguez" class="branding-photo">
+      <img src="assets/STICKER 2.png" alt="Miguel Rodriguez" class="branding-photo">
+    </div>
+
+    <!-- Marquee below branding header -->
+    <div class="marquee">
+      <div class="marquee-track"><span>PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span><span aria-hidden="true">PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; PORTAFOLIO &nbsp;✦&nbsp; ABOUT ME &nbsp;✦&nbsp; MIGUEL RODRIGUEZ &nbsp;✦&nbsp; </span></div>
     </div>
 
     <!-- Ojito al Corto -->
+    <div class="ojito-wrap">
     <div class="ojito">
-      <div class="ojito-bg" aria-hidden="true">
-        <img src="assets/OJO FONDO.png" alt="">
+
+      <!-- Fila 1 -->
+      <div class="ojito-cell ojito-logo">
+        <img src="assets/Logo ojo al corto.png" alt="Ojito al Corto — logo">
       </div>
-      <div class="ojito-content">
-        <img src="assets/OJO.gif"          alt="Ojito al Corto — animación" class="ojito-gif reveal">
-        <div class="ojito-merch reveal">
-          <img src="assets/OJO GORRAS.png"    alt="Ojito al Corto — gorras">
-          <img src="assets/OJO LIBRETAS.png"  alt="Ojito al Corto — libretas">
-          <img src="assets/OJO CARRISEL.png"  alt="Ojito al Corto — colección">
-        </div>
+      <div class="ojito-cell ojito-banner">
+        <img src="assets/Ojito al corto.png" alt="Ojito al Corto — evento">
       </div>
+
+      <!-- Fila 2 -->
+      <div class="ojito-cell ojito-text">
+        <p>Proyecto de identidad visual y animación para un festival desarrollado desde cero. Se creó la mascota oficial basada en "Tomás", una mascota de Taller 5, junto a toda la línea gráfica, piezas promocionales y animación principal del evento.</p>
+      </div>
+      <div class="ojito-cell ojito-gif">
+        <img src="assets/OJO.gif" alt="Ojito al Corto — animación logo">
+      </div>
+
+      <!-- Fila 3 -->
+      <div class="ojito-cell ojito-libretas">
+        <img src="assets/OJO LIBRETAS.png" alt="Ojito al Corto — libretas">
+      </div>
+      <div class="ojito-cell ojito-gorras">
+        <img src="assets/OJO GORRAS.png" alt="Ojito al Corto — gorras">
+      </div>
+      <div class="ojito-cell ojito-carrisel">
+        <img src="assets/OJO CARRISEL.png" alt="Ojito al Corto — carrisel">
+      </div>
+
+    </div>
     </div>
 
     <!-- Festival de Salsa -->
     <div class="festival">
-      <img src="assets/FEST BANNER.png" alt="Festival de Salsa — banner" class="fest-banner reveal">
-      <p class="fest-desc reveal">Proyecto integral de identidad visual para un festival de salsa creado desde cero. Se desarrolló la propuesta gráfica completa, incluyendo tipografía, personaje oficial y sistema visual complementario, aplicado en piezas digitales, material impreso, diseño web y administración visual de redes sociales.</p>
-      <div class="fest-gifs reveal">
-        <img src="assets/FESTIVAL S 1.gif" alt="Festival de Salsa — animación 1">
-        <img src="assets/FESTIVAL S 2.gif" alt="Festival de Salsa — animación 2">
-        <img src="assets/FESTIVAL S 3.gif" alt="Festival de Salsa — animación 3">
+
+      <!-- 1. Hero GIF -->
+      <div class="fest-hero">
+        <img src="assets/FESTIVAL S 1.gif" alt="Son de Calle — Festival de Salsa">
       </div>
-      <div class="fest-grid reveal">
-        <img src="assets/Fest .png"  alt="Festival de Salsa — pieza 1">
-        <img src="assets/Fest 2.png" alt="Festival de Salsa — pieza 2">
-        <img src="assets/Fest 3.png" alt="Festival de Salsa — pieza 3">
-        <img src="assets/Fest 4.png" alt="Festival de Salsa — pieza 4">
+
+      <!-- 2. Texto + FEST SALSA -->
+      <div class="fest-info">
+        <p class="fest-desc">Proyecto integral de identidad visual para un festival de salsa creado desde cero. Se desarrolló la propuesta gráfica completa, incluyendo tipografía, personaje oficial y sistema visual complementario, aplicado posteriormente en piezas digitales, material impreso, diseño web y administración visual de redes sociales.</p>
+        <img src="assets/FEST SALSA.png" alt="Son de Calle — branding" class="fest-salsa-img">
       </div>
+
+      <!-- 3. Carrusel ping-pong -->
+      <div class="fest-carousel">
+        <div class="fest-carousel-track" id="fest-carousel-track">
+          <img src="assets/Fest .png"  alt="Son de Calle — pieza 1">
+          <img src="assets/Fest 2.png" alt="Son de Calle — pieza 2">
+          <img src="assets/Fest 3.png" alt="Son de Calle — pieza 3">
+          <img src="assets/Fest 4.png" alt="Son de Calle — pieza 4">
+        </div>
+      </div>
+
+      <!-- 4. Grid final -->
+      <div class="fest-final-grid">
+        <div class="fest-grid-gif3">
+          <img src="assets/FESTIVAL S 3.gif" alt="Son de Calle — animación">
+        </div>
+        <div class="fest-grid-banner">
+          <img src="assets/FEST BANNER.png" alt="Son de Calle — banner">
+        </div>
+        <div class="fest-grid-gif2">
+          <img src="assets/FESTIVAL S 2.gif" alt="Son de Calle — web">
+        </div>
+      </div>
+
     </div>
   </section>
 

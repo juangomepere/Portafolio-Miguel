@@ -14,6 +14,21 @@ const revealObs = new IntersectionObserver(
 );
 document.querySelectorAll('.reveal').forEach((el) => revealObs.observe(el));
 
+/* ── Ojito grid entry animation ─────────────────────────────────────────── */
+const ojitoWrap = document.querySelector('.ojito-wrap');
+if (ojitoWrap) {
+  const ojObs = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        ojitoWrap.classList.add('ojito-visible');
+        ojObs.disconnect();
+      }
+    },
+    { threshold: 0.15 }
+  );
+  ojObs.observe(ojitoWrap);
+}
+
 /* ── Illustrations Fan ─────────────────────────────────────────────────── */
 const illusFan = document.querySelector('.illus-fan');
 if (illusFan) {
@@ -93,40 +108,118 @@ if (projSlides.length) {
   }, 5000);
 }
 
-/* ── Packaging Carousel ────────────────────────────────────────────────── */
-const pkgTrack = document.getElementById('pkg-track');
-const pkgDots  = document.getElementById('pkg-dots');
+/* ── Festival carousel — ping-pong ────────────────────────────────────── */
+const festTrack = document.getElementById('fest-carousel-track');
+if (festTrack) {
+  /* duplicate images for seamless fill */
+  Array.from(festTrack.children).forEach(img => {
+    const clone = img.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    festTrack.appendChild(clone);
+  });
 
-if (pkgTrack && pkgDots) {
-  const dots = pkgDots.querySelectorAll('.pkg-dot');
-  let pkgCur = 0;
-  let pkgTimer;
+  let pos = 0;
+  let dir = -1;
+  const SPEED = 0.9;
 
-  function goToPkg(n) {
-    pkgCur = ((n % dots.length) + dots.length) % dots.length;
-    pkgTrack.style.transform = `translateX(-${pkgCur * 100}%)`;
-    dots.forEach((d, i) => d.classList.toggle('active', i === pkgCur));
+  (function tick() {
+    const maxScroll = festTrack.scrollWidth - festTrack.parentElement.offsetWidth;
+    pos += dir * SPEED;
+    if (pos <= -maxScroll) { pos = -maxScroll; dir = 1; }
+    if (pos >= 0)           { pos = 0;          dir = -1; }
+    festTrack.style.transform = `translateX(${pos}px)`;
+    requestAnimationFrame(tick);
+  })();
+}
+
+/* ── Packaging Fan + Grid ──────────────────────────────────────────────── */
+const pkgStage = document.getElementById('pkg-stage');
+if (pkgStage) {
+  const pkgCards = Array.from(pkgStage.querySelectorAll('.pkg-card'));
+  let pkgExpanded = false;
+
+  function pkgApplyCenter() {
+    pkgCards.forEach((c, i) => {
+      c.style.width     = '';
+      c.style.height    = '';
+      c.style.top       = '';
+      c.style.transform = 'translateX(-50%)';
+      c.style.opacity   = i === 1 ? '1' : '0';
+    });
+    pkgCards[0].style.zIndex = '1';
+    pkgCards[1].style.zIndex = '3';
+    pkgCards[2].style.zIndex = '2';
+    /* read offsetWidth after clearing inline styles to get CSS-computed value */
+    const cw  = pkgCards[1].offsetWidth;
+    const pad = Math.max(12, Math.round(pkgStage.offsetWidth * 0.015));
+    pkgStage.style.height = (pad + Math.round(cw * 1.25) + pad) + 'px';
   }
 
-  function resetPkgAuto() {
-    clearInterval(pkgTimer);
-    pkgTimer = setInterval(() => goToPkg(pkgCur + 1), 3500);
+  function pkgApplyFan() {
+    const cw     = pkgCards[1].offsetWidth;
+    const sw     = pkgStage.offsetWidth;
+    const offset = Math.round(Math.min(cw * 0.72, (sw / 2) * 0.78));
+    pkgCards.forEach(c => { c.style.opacity = '1'; });
+    pkgCards[0].style.transform = `translateX(calc(-50% - ${offset}px)) rotate(-18deg)`;
+    pkgCards[1].style.transform = 'translateX(-50%)';
+    pkgCards[2].style.transform = `translateX(calc(-50% + ${offset}px)) rotate(18deg)`;
   }
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      goToPkg(+dot.dataset.index);
-      resetPkgAuto();
+  function pkgApplyGrid() {
+    const sw  = pkgStage.offsetWidth;
+    const pad = Math.max(16, Math.round(sw * 0.018));
+    const gap = Math.max(8,  Math.round(sw * 0.012));
+    const cw  = Math.floor((sw - pad * 2 - gap * 2) / 3);
+    const ch  = Math.floor(cw * 1.25);
+    const top = pad;
+
+    pkgStage.style.height = (top + ch + top) + 'px';
+
+    const lefts = [pad, pad + cw + gap, pad + cw * 2 + gap * 2];
+    const half  = sw / 2;
+
+    pkgCards.forEach((c, i) => {
+      const extra = lefts[i] + cw / 2 - half;
+      c.style.width     = cw + 'px';
+      c.style.height    = ch + 'px';
+      c.style.top       = top + 'px';
+      c.style.opacity   = '1';
+      c.style.zIndex    = '1';
+      c.style.transform = `translateX(calc(-50% + ${extra}px))`;
+    });
+  }
+
+  /* Init without animation then enable transitions */
+  pkgCards.forEach(c => { c.style.transition = 'none'; });
+  requestAnimationFrame(() => {
+    pkgApplyCenter();
+    requestAnimationFrame(() => {
+      const trans =
+        'transform 0.55s cubic-bezier(0.34,1.1,0.64,1), ' +
+        'opacity 0.45s ease, ' +
+        'width 0.55s cubic-bezier(0.34,1.1,0.64,1), ' +
+        'height 0.55s cubic-bezier(0.34,1.1,0.64,1)';
+      pkgCards.forEach(c => { c.style.transition = trans; });
     });
   });
 
-  /* touch/swipe */
-  let pkgTouchX = 0;
-  pkgTrack.addEventListener('touchstart', (e) => { pkgTouchX = e.touches[0].clientX; }, { passive: true });
-  pkgTrack.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - pkgTouchX;
-    if (Math.abs(dx) > 50) { goToPkg(dx < 0 ? pkgCur + 1 : pkgCur - 1); resetPkgAuto(); }
+  pkgStage.addEventListener('mouseenter', () => {
+    if (!pkgExpanded) pkgApplyFan();
+  });
+  pkgStage.addEventListener('mouseleave', () => {
+    if (!pkgExpanded) pkgApplyCenter();
+  });
+  pkgStage.addEventListener('click', () => {
+    pkgExpanded = !pkgExpanded;
+    if (pkgExpanded) pkgApplyGrid();
+    else             pkgApplyCenter();
   });
 
-  resetPkgAuto();
+  let pkgResizeId;
+  window.addEventListener('resize', () => {
+    clearTimeout(pkgResizeId);
+    pkgResizeId = setTimeout(() => {
+      if (pkgExpanded) pkgApplyGrid(); else pkgApplyCenter();
+    }, 100);
+  });
 }

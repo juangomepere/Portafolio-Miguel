@@ -543,9 +543,24 @@ a   { text-decoration: none; color: inherit; }
 
 /* Escena full-bleed — hijo directo de section, sin container */
 .lego-scene {
+  position: relative;
   width: 100%;
   line-height: 0;
   font-size: 0;
+  overflow: visible;
+}
+
+.lego-backdrop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lego-fill {
+  background: #F8F1EA;
+  width: 100%;
+  height: clamp(80px, 12vw, 180px);
+  margin: -1px 0;
 }
 
 /* Wave clip containers — show only the wave strip via object-fit crop */
@@ -553,6 +568,8 @@ a   { text-decoration: none; color: inherit; }
   width: 100%;
   line-height: 0;
   font-size: 0;
+  position: relative;
+  z-index: 2;
 }
 .lego-wave-clip img {
   width: 100%;
@@ -568,12 +585,15 @@ a   { text-decoration: none; color: inherit; }
 
 /* Carrusel slide+fade */
 .lego-carousel {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
   width: 100%;
-  height: clamp(260px, 32vh, 420px);
+  height: clamp(560px, 72vh, 900px);
   overflow: hidden;
-  background: #F8F1EA;
-  z-index: 1;
+  background: transparent;
+  z-index: 3;
 }
 
 .lego-track {
@@ -764,7 +784,7 @@ a   { text-decoration: none; color: inherit; }
 ═══════════════════════════════════════════════════════════ */
 .carousel-section {
   background-color: var(--blue);
-  padding: clamp(1rem, 3vw, 3rem) clamp(2rem, 6vw, 8rem) clamp(2rem, 4vw, 4rem);
+  padding: clamp(1rem, 3vw, 3rem) clamp(2rem, 6vw, 8rem) 0;
   position: relative;
 }
 
@@ -870,7 +890,7 @@ a   { text-decoration: none; color: inherit; }
 .ed-featured {
   width: 100%;
   max-width: 900px;
-  margin: 0 auto clamp(2.5rem, 5vw, 5rem);
+  margin: 0 auto clamp(1.5rem, 3vw, 3rem);
 }
 .ed-featured img { width: 100%; display: block; }
 
@@ -878,8 +898,8 @@ a   { text-decoration: none; color: inherit; }
 .ed-row {
   display: flex;
   align-items: center;
-  gap: clamp(2rem, 4vw, 4rem);
-  margin-bottom: clamp(3rem, 6vw, 6rem);
+  gap: clamp(1.5rem, 3vw, 3rem);
+  margin-bottom: clamp(1.5rem, 3vw, 3rem);
 }
 .ed-row--rev { flex-direction: row-reverse; }
 
@@ -894,7 +914,7 @@ a   { text-decoration: none; color: inherit; }
   font-size: clamp(0.85rem, 1.05vw, 1rem);
   line-height: 1.85;
   opacity: 0.88;
-  color: var(--navy);
+  color: #000;
   text-align: center;
 }
 
@@ -915,60 +935,70 @@ a   { text-decoration: none; color: inherit; }
 .packaging-title {
   font-family: 'Anton', sans-serif;
   font-size: clamp(4.5rem, 13vw, 12rem);
-  color: var(--navy);
+  color: var(--blue);
   line-height: 0.88;
-  margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-.packaging-desc {
-  font-size: clamp(0.8rem, 0.95vw, 0.92rem);
-  line-height: 1.8;
-  opacity: 0.85;
-  max-width: 900px;
-  margin-bottom: 3rem;
-}
-
-.pkg-carousel {
+/* Stage — full-width relative container for fanned cards */
+.pkg-stage {
   position: relative;
-  overflow: hidden;
-  border-radius: 1.5rem;
-  max-width: 900px;
-  margin: 0 auto;
+  height: clamp(300px, 44vw, 560px);
+  cursor: pointer;
+  margin: clamp(1rem, 2vw, 2rem) 0 clamp(2rem, 4vw, 4rem);
+  transition: height 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.pkg-track {
-  display: flex;
-  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.pkg-card {
+  position: absolute;
+  left: 50%;
+  top: clamp(12px, 1.5vw, 20px);
+  width: clamp(220px, 32vw, 420px);
+  aspect-ratio: 4 / 5;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+  transform: translateX(-50%);
+  transition: transform 0.55s cubic-bezier(0.34, 1.1, 0.64, 1),
+              opacity  0.45s ease,
+              width    0.55s cubic-bezier(0.34, 1.1, 0.64, 1),
+              height   0.55s cubic-bezier(0.34, 1.1, 0.64, 1);
   will-change: transform;
 }
 
-.pkg-slide { min-width: 100%; }
-.pkg-slide img {
+.pkg-card img {
   width: 100%;
-  height: clamp(260px, 40vw, 540px);
+  height: 100%;
   object-fit: cover;
-  border-radius: 1.5rem;
   display: block;
 }
 
-.pkg-dots {
-  display: flex;
-  justify-content: center;
-  gap: 0.65rem;
-  margin-top: 1.5rem;
+.pkg-card--1 { z-index: 1; opacity: 0; }
+.pkg-card--2 { z-index: 3; opacity: 1; }
+.pkg-card--3 { z-index: 2; opacity: 0; }
+
+/* Info block below photos */
+.pkg-info {
+  text-align: center;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
-.pkg-dot {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
-  border: 2px solid var(--navy);
-  background: transparent;
-  cursor: pointer;
-  transition: background-color 0.25s;
-  padding: 0;
+.pkg-click-icon {
+  width: clamp(2rem, 3vw, 3.2rem);
+  display: block;
+  margin: 0 auto clamp(0.8rem, 1.5vw, 1.2rem);
 }
-.pkg-dot.active { background-color: var(--navy); }
+
+.pkg-text {
+  font-size: clamp(0.82rem, 1vw, 0.96rem);
+  line-height: 1.85;
+  opacity: 0.88;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+.pkg-text:last-child { margin-bottom: 0; }
 
 /* ═══════════════════════════════════════════════════════════
    BRANDING
@@ -976,122 +1006,220 @@ a   { text-decoration: none; color: inherit; }
 .branding { background-color: var(--cream); }
 
 .branding-header {
+  position: relative;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: clamp(2.5rem, 6vw, 6rem) clamp(1.5rem, 5vw, 5rem) clamp(1.5rem, 3vw, 3rem);
-  max-width: 1280px;
-  margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4rem, 9vw, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 9vw, 9rem);
+  overflow: hidden;
 }
 
 .branding-title {
   font-family: 'Anton', sans-serif;
   font-size: clamp(4.5rem, 13vw, 12rem);
-  color: var(--navy);
+  color: var(--blue);
   line-height: 0.88;
 }
 
 .branding-photo {
-  width: clamp(100px, 18vw, 260px);
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-/* Ojito al Corto */
-.ojito {
-  position: relative;
-  overflow: hidden;
-  min-height: clamp(340px, 50vw, 600px);
-}
-
-.ojito-bg {
   position: absolute;
-  inset: 0;
-}
-.ojito-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  right: clamp(2rem, 6vw, 8rem);
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(120px, 20vw, 280px);
+  object-fit: contain;
+  pointer-events: none;
 }
 
-.ojito-content {
-  position: relative;
-  z-index: 2;
+/* Ojito al Corto — wrapper + grid */
+.ojito-wrap {
+  background-image: url('assets/OJO FONDO 2.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.ojito {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(0.4rem, 0.7vw, 0.8rem);
+  padding: clamp(1.5rem, 3vw, 3rem) clamp(0.5rem, 1.5vw, 1.5rem);
+  opacity: 0;
+  transform: scale(0.82);
+}
+
+.ojito-wrap.ojito-visible .ojito {
+  animation: ojito-enter 0.9s ease-out forwards;
+}
+
+@keyframes ojito-enter {
+  from { opacity: 0; transform: scale(0.82); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+.ojito-cell {
+  border-radius: 1rem;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
-  padding: clamp(2.5rem, 5vw, 5rem) clamp(1.5rem, 5vw, 5rem);
+  justify-content: center;
+}
+
+/* ── Fila 1 ── */
+.ojito-logo {
+  grid-column: 1;
+  grid-row: 1;
+  background-image: url('assets/OJO FONDO 3.png');
+  background-size: cover;
+  background-position: center;
+  padding: clamp(0.8rem, 1.2vw, 1.2rem);
+  max-height: clamp(100px, 13vw, 500px);
+}
+.ojito-logo img { width: 70%; object-fit: contain; }
+
+.ojito-banner {
+  grid-column: 2 / 4;
+  grid-row: 1;
+}
+.ojito-banner img { width: 100%; height: auto; display: block; border-radius: 1rem; }
+
+/* ── Fila 2 ── */
+.ojito-text {
+  grid-column: 1;
+  grid-row: 2;
+  background-image: url('assets/OJO FONDO 4.png');
+  background-size: cover;
+  background-position: center;
+  padding: clamp(1rem, 2vw, 2rem);
+  min-height: clamp(180px, 20vw, 280px);
+}
+.ojito-text p {
+  color: var(--white);
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  line-height: 1.75;
+  text-align: center;
+  font-weight: 500;
 }
 
 .ojito-gif {
-  max-height: clamp(140px, 22vw, 280px);
-  border-radius: 1rem;
+  grid-column: 2 / 4;
+  grid-row: 2;
+  background-color: var(--white);
+  padding: clamp(1rem, 2vw, 2.5rem);
+}
+.ojito-gif img {
+  max-height: clamp(140px, 18vw, 240px);
   object-fit: contain;
 }
 
-.ojito-merch {
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  justify-content: center;
+/* ── Fila 3 ── */
+.ojito-libretas {
+  grid-column: 1;
+  grid-row: 3;
+  background-image: url('assets/OJO FONDO 5.jpeg');
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+  min-height: clamp(160px, 18vw, 240px);
 }
-.ojito-merch img {
-  height: clamp(100px, 18vw, 200px);
-  width: auto;
-  border-radius: 0.75rem;
-  object-fit: cover;
-  flex-shrink: 0;
+.ojito-libretas img { width: 100%; object-fit: contain; }
+
+.ojito-gorras {
+  grid-column: 2;
+  grid-row: 3;
+  background-image: url('assets/OJO FONDO 3.png');
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
 }
+.ojito-gorras img { width: 100%; object-fit: contain; }
+
+.ojito-carrisel {
+  grid-column: 3;
+  grid-row: 3;
+  background-image: url('assets/OJO FONDO.png');
+  background-size: cover;
+  background-position: center;
+  padding: 1rem;
+}
+.ojito-carrisel img { width: 100%; object-fit: contain; }
 
 /* Festival de Salsa */
-.festival {
-  padding: clamp(3rem, 6vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+.festival { overflow: hidden; }
+
+/* 1. Hero GIF */
+.fest-hero { width: 100%; line-height: 0; }
+.fest-hero img {
+  width: 100%;
+  display: block;
+  max-height: clamp(320px, 55vw, 680px);
+  object-fit: cover;
+}
+
+/* 2. Texto + FEST SALSA */
+.fest-info {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  padding: clamp(2rem, 4vw, 4rem) clamp(1.5rem, 5vw, 5rem);
   max-width: 1280px;
   margin: 0 auto;
 }
 
-.fest-banner {
-  width: 100%;
-  border-radius: 1rem;
-  margin-bottom: 2rem;
-  object-fit: cover;
-  max-height: clamp(180px, 30vw, 420px);
-}
-
 .fest-desc {
+  flex: 0 0 clamp(200px, 28vw, 360px);
   font-size: clamp(0.8rem, 0.95vw, 0.92rem);
   line-height: 1.8;
   opacity: 0.85;
-  max-width: 860px;
-  margin-bottom: 2.5rem;
 }
 
-.fest-gifs {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-}
-.fest-gifs img {
+.fest-salsa-img {
   flex: 1;
-  min-width: clamp(80px, 18vw, 200px);
-  height: clamp(90px, 14vw, 170px);
-  object-fit: cover;
+  width: 100%;
   border-radius: 0.75rem;
+  display: block;
 }
 
-.fest-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-.fest-grid img {
+/* 3. Carrusel ping-pong */
+.fest-carousel {
+  overflow: hidden;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 0.75rem;
+  margin: clamp(1rem, 2vw, 2rem) 0;
 }
+
+.fest-carousel-track {
+  display: flex;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  will-change: transform;
+}
+
+.fest-carousel-track img {
+  height: clamp(180px, 22vw, 300px);
+  width: auto;
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  display: block;
+}
+
+/* 4. Grid final */
+.fest-final-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: clamp(0.5rem, 1vw, 1rem);
+  padding: clamp(1rem, 2vw, 2rem) clamp(1.5rem, 5vw, 5rem) clamp(2rem, 4vw, 4rem);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.fest-grid-gif3 { grid-column: 1; grid-row: 1 / 3; }
+.fest-grid-gif3 img { width: 100%; height: 100%; object-fit: cover; border-radius: 0.75rem; display: block; }
+
+.fest-grid-banner { grid-column: 2; grid-row: 1; }
+.fest-grid-banner img { width: 100%; border-radius: 0.75rem; display: block; }
+
+.fest-grid-gif2 { grid-column: 2; grid-row: 2; }
+.fest-grid-gif2 img { width: 100%; border-radius: 0.75rem; display: block; }
 
 /* ═══════════════════════════════════════════════════════════
    CONTACT
@@ -1189,7 +1317,7 @@ a   { text-decoration: none; color: inherit; }
   .carousel-btn--prev { left: -5px; }
   .carousel-btn--next { right: -5px; }
 
-  .ojito-merch        { flex-direction: column; align-items: center; }
+  .ojito             { grid-template-columns: 1fr; }
   .fest-gifs          { flex-direction: column; }
   .fest-grid          { grid-template-columns: 1fr; }
 }
