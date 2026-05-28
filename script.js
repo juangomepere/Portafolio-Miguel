@@ -44,7 +44,7 @@ if (illusFan) {
   fanObs.observe(illusFan);
 }
 
-/* ── 3D Renders Carousel — hold to scroll ──────────────────────────────── */
+/* ── 3D Renders Carousel — hold to scroll + drag/swipe ─────────────────── */
 const rendersTrack = document.getElementById('renders-track');
 const prevBtn      = document.getElementById('prev-btn');
 const nextBtn      = document.getElementById('next-btn');
@@ -59,9 +59,13 @@ if (rendersTrack) {
     return rendersTrack.scrollWidth - screen.offsetWidth;
   }
 
-  function scroll(dir) {
-    scrollX = Math.max(0, Math.min(scrollX + dir * SPEED, getMax()));
+  function setX(x) {
+    scrollX = Math.max(0, Math.min(x, getMax()));
     rendersTrack.style.transform = `translateX(-${scrollX}px)`;
+  }
+
+  function scroll(dir) {
+    setX(scrollX + dir * SPEED);
     rafId = requestAnimationFrame(() => scroll(dir));
   }
 
@@ -69,6 +73,7 @@ if (rendersTrack) {
     if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
   }
 
+  /* ── Botones hold-to-scroll ── */
   [[prevBtn, -1], [nextBtn, 1]].forEach(([btn, dir]) => {
     if (!btn) return;
     btn.addEventListener('mousedown',  () => scroll(dir));
@@ -77,8 +82,78 @@ if (rendersTrack) {
     btn.addEventListener('mouseleave', stop);
     btn.addEventListener('touchend',   stop);
   });
-
   document.addEventListener('mouseup', stop);
+
+  /* ── Momentum ── */
+  let velocity    = 0;
+  let momentumRaf = null;
+  const FRICTION  = 0.97;
+
+  function applyMomentum() {
+    velocity *= FRICTION;
+    if (Math.abs(velocity) < 0.4) { velocity = 0; return; }
+    setX(scrollX + velocity);
+    momentumRaf = requestAnimationFrame(applyMomentum);
+  }
+
+  function stopMomentum() {
+    if (momentumRaf) { cancelAnimationFrame(momentumRaf); momentumRaf = null; }
+    velocity = 0;
+  }
+
+  /* ── Drag con mouse ── */
+  let dragging  = false;
+  let dragStart = 0;
+  let dragBase  = 0;
+  let lastClientX = 0;
+
+  screen.style.cursor = 'grab';
+
+  screen.addEventListener('mousedown', (e) => {
+    stop(); stopMomentum();
+    dragging    = true;
+    dragStart   = e.clientX;
+    dragBase    = scrollX;
+    lastClientX = e.clientX;
+    screen.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    velocity    = -(e.clientX - lastClientX);
+    lastClientX = e.clientX;
+    setX(dragBase + (dragStart - e.clientX));
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    screen.style.cursor = 'grab';
+    momentumRaf = requestAnimationFrame(applyMomentum);
+  });
+
+  /* ── Swipe táctil ── */
+  let touchStart   = 0;
+  let touchBase    = 0;
+  let lastTouchX   = 0;
+
+  screen.addEventListener('touchstart', (e) => {
+    stop(); stopMomentum();
+    touchStart  = e.touches[0].clientX;
+    touchBase   = scrollX;
+    lastTouchX  = e.touches[0].clientX;
+  }, { passive: true });
+
+  screen.addEventListener('touchmove', (e) => {
+    velocity   = -(e.touches[0].clientX - lastTouchX);
+    lastTouchX = e.touches[0].clientX;
+    setX(touchBase + (touchStart - e.touches[0].clientX));
+  }, { passive: true });
+
+  screen.addEventListener('touchend', () => {
+    momentumRaf = requestAnimationFrame(applyMomentum);
+  });
 }
 
 /* ── Lego Deadpool Carousel (slide + fade) ──────────────────────────────── */
