@@ -172,15 +172,19 @@ if (legoTrack) {
   }, 3000);
 }
 
-/* ── Proyectos 3D — Fade (Principito / Tren) ──────────────────────────── */
+/* ── Proyectos 3D — Click to switch (Principito / Tren) ───────────────── */
 const projSlides = document.querySelectorAll('.project-slide');
 if (projSlides.length) {
   let projCur = 0;
-  setInterval(() => {
-    projSlides[projCur].classList.remove('active');
-    projCur = (projCur + 1) % projSlides.length;
-    projSlides[projCur].classList.add('active');
-  }, 5000);
+  const projSection = document.querySelector('.projects-fade-section');
+  if (projSection) {
+    projSection.style.cursor = 'pointer';
+    projSection.addEventListener('click', () => {
+      projSlides[projCur].classList.remove('active');
+      projCur = (projCur + 1) % projSlides.length;
+      projSlides[projCur].classList.add('active');
+    });
+  }
 }
 
 /* ── Festival carousel — ping-pong ────────────────────────────────────── */
