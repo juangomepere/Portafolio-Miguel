@@ -807,10 +807,17 @@ a   { text-decoration: none; color: inherit; }
   align-items: flex-end;
 }
 
+.project-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
 .project-icon {
-  width: clamp(2rem, 3vw, 3.2rem);
-  margin-bottom: 0.4rem;
-  align-self: center;
+  width: clamp(2.5rem, 4vw, 4.5rem);
+  flex-shrink: 0;
+  transform: translateY(-10px);
 }
 
 .project-title {
@@ -820,8 +827,6 @@ a   { text-decoration: none; color: inherit; }
   color: var(--blue);
   line-height: 0.88;
   text-align: right;
-  margin-bottom: 1.5rem;
-  width: 100%;
 }
 
 .project-img {
