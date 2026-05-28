@@ -188,9 +188,9 @@ a   { text-decoration: none; color: inherit; }
 }
 
 .hero-subtitle {
-  font-family: 'Montserrat Alternates', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1rem, 2.2vw, 1.9rem);
+  font-family: "dharma-gothic-m", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 4.5rem);
   color: var(--navy);
   letter-spacing: 0.08em;
   margin-bottom: 0.1em;
@@ -210,7 +210,7 @@ a   { text-decoration: none; color: inherit; }
 .hero-name {
   font-family: "dharma-gothic-m", sans-serif;
   font-weight: 800;
-  font-size: clamp(1.4rem, 3.8vw, 3.4rem);
+  font-size: clamp(1.8rem, 5vw, 4.5rem);
   color: var(--navy);
   letter-spacing: 0.08em;
   margin-bottom: 1.8rem;
