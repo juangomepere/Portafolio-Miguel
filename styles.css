@@ -168,12 +168,12 @@ a   { text-decoration: none; color: inherit; }
   position: absolute;
   top: 2%;
   left: -4%;
-  font-family: 'Caveat', cursive;
+  font-family: 'Austhina Brush Calligraphy Scratch-Regular', 'Caveat', cursive;
   font-size: clamp(3rem, 8vw, 7rem);
   font-weight: 700;
   color: var(--navy);
   line-height: 1;
-  transform: rotate(-8deg);
+  transform: rotate(-16deg);
   transform-origin: bottom left;
   z-index: 11;
   pointer-events: none;
@@ -184,15 +184,13 @@ a   { text-decoration: none; color: inherit; }
   padding-top: clamp(2.5rem, 5vw, 5rem);
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  width: 100%;
+  align-items: flex-end;
 }
 
 .hero-subtitle {
-  align-self: flex-end;
   font-family: 'Montserrat Alternates', sans-serif;
   font-weight: 700;
-  font-size: clamp(0.85rem, 1.8vw, 1.5rem);
+  font-size: clamp(1rem, 2.2vw, 1.9rem);
   color: var(--navy);
   letter-spacing: 0.08em;
   margin-bottom: 0.1em;
@@ -202,7 +200,7 @@ a   { text-decoration: none; color: inherit; }
 .hero-title {
   font-family: "dharma-gothic-m", sans-serif;
   font-weight: 800;
-  font-size: clamp(4.5rem, 15vw, 13rem);
+  font-size: clamp(5rem, 19vw, 17rem);
   color: var(--blue);
   line-height: 0.88;
   letter-spacing: -0.01em;
@@ -210,12 +208,13 @@ a   { text-decoration: none; color: inherit; }
 }
 
 .hero-name {
-  font-family: 'Anton', sans-serif;
-  font-size: clamp(1.2rem, 3.2vw, 2.8rem);
+  font-family: "dharma-gothic-m", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3.8vw, 3.4rem);
   color: var(--navy);
   letter-spacing: 0.08em;
   margin-bottom: 1.8rem;
-  text-align: center;
+  align-self: flex-start;
 }
 
 .hero-btn {
@@ -247,7 +246,7 @@ a   { text-decoration: none; color: inherit; }
 .hero-sticker {
   position: absolute;
   bottom: 3%;
-  right: clamp(2%, 4vw, 6%);
+  right: clamp(16%, 22vw, 28%);
   width: clamp(150px, 22vw, 310px);
   z-index: 10;
   animation: float 4s ease-in-out infinite;
@@ -909,8 +908,8 @@ a   { text-decoration: none; color: inherit; }
   transition: transform 0.2s;
 }
 .carousel-btn:hover { transform: scale(1.18); }
-.carousel-btn--prev { left: 0; }
-.carousel-btn--next { right: 0; }
+.carousel-btn--prev { left: calc(-1 * clamp(36px, 5vw, 68px)); }
+.carousel-btn--next { right: calc(-1 * clamp(36px, 5vw, 68px)); }
 .carousel-btn img   { width: clamp(36px, 5vw, 68px); }
 
 /* ═══════════════════════════════════════════════════════════
@@ -936,7 +935,7 @@ a   { text-decoration: none; color: inherit; }
 }
 
 .editorial-script {
-  font-family: 'Caveat', cursive;
+  font-family: 'Austhina Brush Calligraphy Scratch-Regular', 'Caveat', cursive;
   font-size: clamp(2.5rem, 6vw, 5rem);
   color: var(--navy);
   margin-top: 0.1em;
@@ -1067,8 +1066,8 @@ a   { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
   padding: clamp(4rem, 9vw, 9rem) clamp(1.5rem, 5vw, 5rem) clamp(4rem, 9vw, 9rem);
-  overflow: hidden;
 }
 
 .branding-title {
@@ -1080,13 +1079,10 @@ a   { text-decoration: none; color: inherit; }
 }
 
 .branding-photo {
-  position: absolute;
-  right: clamp(2rem, 6vw, 8rem);
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(120px, 20vw, 280px);
+  width: clamp(100px, 14vw, 200px);
   object-fit: contain;
   pointer-events: none;
+  flex-shrink: 0;
 }
 
 /* Ojito al Corto — wrapper + grid */
